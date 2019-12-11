@@ -23,6 +23,10 @@ class Shrine
           basename = basic_location(io, metadata: metadata)
           basename = [*(version || derivative), basename].join("-")
 
+          if opts[:pretty_location][:basename] && (record_basename = record.public_send(opts[:pretty_location][:basename]))
+            basename = record_basename + '-' + basename
+          end
+
           [*namespace, *identifier, *name, basename].join("/")
         end
 
